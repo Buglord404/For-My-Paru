@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Parvathy 💖</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+      color: #fff;
+      text-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+    }
+
+    h2 {
+      color: #fff;
+      margin-bottom: 30px;
+      font-weight: normal;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #ff1e56;
+      color: white;
+      box-shadow: 0 0 15px rgba(255,30,86,0.6);
+    }
+
+    #noBtn {
+      background: #333;
+      color: white;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 26px;
+      animation: float 3s linear forwards;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-180px);
+        opacity: 0;
+      }
+    }
+
+    #thankYou {
+      display: none;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 2px 2px 15px rgba(0,0,0,0.35);
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="question">Parvathy 💕</h1>
+  <h2>Will you be my Valentine?</h2>
+
+  <div class="buttons" id="buttons">
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No 😌</button>
+  </div>
+
+  <div id="thankYou">Thank you, Parvathy 💖🥰</div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const buttons = document.getElementById("buttons");
+    const question = document.getElementById("question");
+    const thankYou = document.getElementById("thankYou");
+
+    let scale = 1;
+
+    noBtn.addEventListener("click", () => {
+      scale -= 0.15;
+      noBtn.style.transform = `scale(${scale})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      question.style.display = "none";
+      buttons.style.display = "none";
+      thankYou.style.display = "block";
+
+      for (let i = 0; i < 50; i++) {
+        createHeart();
+      }
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
