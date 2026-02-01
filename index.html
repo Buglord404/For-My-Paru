@@ -5,73 +5,85 @@
   <title>For Parvathy 💖</title>
   <style>
     body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #ff4d6d, #7209b7);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
       font-family: Arial, sans-serif;
-      overflow: hidden;
+      color: white;
       text-align: center;
     }
 
     h1 {
-      font-size: 2.6rem;
-      color: #fff;
-      text-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+      font-size: 2.8rem;
+      text-shadow: 0 0 15px rgba(255,255,255,0.6);
     }
 
     h2 {
-      color: #fff;
       margin-bottom: 30px;
       font-weight: normal;
+      opacity: 0.95;
     }
 
     .buttons {
       position: relative;
-      display: flex;
-      gap: 20px;
     }
 
     button {
-      font-size: 1.2rem;
-      padding: 12px 28px;
+      font-size: 1.3rem;
+      padding: 14px 32px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: 0.2s;
     }
 
     #yesBtn {
-      background: #ff1e56;
-      color: white;
-      box-shadow: 0 0 15px rgba(255,30,86,0.6);
+      background: #ffd6e0;
+      color: #6a040f;
+      box-shadow: 0 0 25px rgba(255,214,224,0.8);
     }
 
     #noBtn {
-      background: #333;
+      background: #111;
       color: white;
       position: absolute;
-      right: -120px;
+      left: 150px;
     }
 
-    .heart {
-      position: absolute;
+    .love {
+      position: fixed;
       font-size: 26px;
-      animation: float 3s linear forwards;
+      pointer-events: none;
+      animation: blast 2.8s ease-out forwards;
     }
 
-    @keyframes float {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-180px); opacity: 0; }
+    @keyframes blast {
+      0% {
+        transform: scale(0) translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.8) translateY(-220px);
+        opacity: 0;
+      }
     }
 
     #thankYou {
       display: none;
-      font-size: 3rem;
-      color: white;
-      text-shadow: 2px 2px 15px rgba(0,0,0,0.35);
+      font-size: 3.2rem;
+      text-shadow: 0 0 25px rgba(255,255,255,0.9);
+      line-height: 1.3;
+    }
+
+    #signature {
+      font-size: 1.2rem;
+      margin-top: 15px;
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -81,60 +93,54 @@
   <h2>Will you be my Valentine?</h2>
 
   <div class="buttons" id="buttons">
-    <button id="yesBtn">Yes ❤️</button>
+    <button id="yesBtn">YES ❤️</button>
     <button id="noBtn">No 😈</button>
   </div>
 
-  <div id="thankYou">Thank you, Parvathy 💖🥰</div>
-
-  <!-- Background Music -->
-  <audio id="bgm" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
+  <div id="thankYou">
+    I love you, Parvathy 💖<br>
+    Will you marry me? 💍
+    <div id="signature">— Jovin ❤️</div>
+  </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const buttons = document.getElementById("buttons");
     const thankYou = document.getElementById("thankYou");
-    const bgm = document.getElementById("bgm");
 
-    // Start music on first interaction (mobile-friendly)
-    document.body.addEventListener("click", () => {
-      bgm.play().catch(()=>{});
-    }, { once: true });
+    noBtn.addEventListener("mouseover", escapeNo);
+    noBtn.addEventListener("click", escapeNo);
 
-    // NO button runs away
-    noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("click", moveButton);
-
-    function moveButton() {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 100);
+    function escapeNo() {
       noBtn.style.position = "fixed";
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+      noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+      noBtn.style.top = Math.random() * (window.innerHeight - 80) + "px";
     }
 
-    // YES button
     yesBtn.addEventListener("click", () => {
       document.getElementById("question").style.display = "none";
       buttons.style.display = "none";
       thankYou.style.display = "block";
 
-      for (let i = 0; i < 50; i++) {
-        createHeart();
-      }
+      for (let i = 0; i < 100; i++) popLove();
+      setInterval(popLove, 350);
     });
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = window.innerHeight + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 3000);
+    function popLove() {
+      const icons = ["❤️","💖","💘","💕","💞","✨","🎆"];
+      const el = document.createElement("div");
+      el.className = "love";
+      el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+
+      const side = Math.floor(Math.random() * 4);
+      if (side === 0) { el.style.left = "0"; el.style.top = Math.random()*window.innerHeight+"px"; }
+      if (side === 1) { el.style.left = "100%"; el.style.top = Math.random()*window.innerHeight+"px"; }
+      if (side === 2) { el.style.top = "0"; el.style.left = Math.random()*window.innerWidth+"px"; }
+      if (side === 3) { el.style.top = "100%"; el.style.left = Math.random()*window.innerWidth+"px"; }
+
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2800);
     }
   </script>
 
