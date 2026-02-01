@@ -11,14 +11,13 @@
       align-items: center;
       height: 100vh;
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       overflow: hidden;
       text-align: center;
     }
 
     h1 {
       font-size: 2.6rem;
-      margin-bottom: 10px;
       color: #fff;
       text-shadow: 2px 2px 12px rgba(0,0,0,0.25);
     }
@@ -30,6 +29,7 @@
     }
 
     .buttons {
+      position: relative;
       display: flex;
       gap: 20px;
     }
@@ -40,7 +40,7 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: 0.3s ease;
     }
 
     #yesBtn {
@@ -52,6 +52,8 @@
     #noBtn {
       background: #333;
       color: white;
+      position: absolute;
+      right: -120px;
     }
 
     .heart {
@@ -61,14 +63,8 @@
     }
 
     @keyframes float {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-180px);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-180px); opacity: 0; }
     }
 
     #thankYou {
@@ -86,27 +82,43 @@
 
   <div class="buttons" id="buttons">
     <button id="yesBtn">Yes ❤️</button>
-    <button id="noBtn">No 😌</button>
+    <button id="noBtn">No 😈</button>
   </div>
 
   <div id="thankYou">Thank you, Parvathy 💖🥰</div>
+
+  <!-- Background Music -->
+  <audio id="bgm" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const buttons = document.getElementById("buttons");
-    const question = document.getElementById("question");
     const thankYou = document.getElementById("thankYou");
+    const bgm = document.getElementById("bgm");
 
-    let scale = 1;
+    // Start music on first interaction (mobile-friendly)
+    document.body.addEventListener("click", () => {
+      bgm.play().catch(()=>{});
+    }, { once: true });
 
-    noBtn.addEventListener("click", () => {
-      scale -= 0.15;
-      noBtn.style.transform = `scale(${scale})`;
-    });
+    // NO button runs away
+    noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("click", moveButton);
 
+    function moveButton() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+      noBtn.style.position = "fixed";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // YES button
     yesBtn.addEventListener("click", () => {
-      question.style.display = "none";
+      document.getElementById("question").style.display = "none";
       buttons.style.display = "none";
       thankYou.style.display = "block";
 
@@ -117,17 +129,12 @@
 
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
+      heart.className = "heart";
       heart.innerHTML = "❤️";
-
       heart.style.left = Math.random() * window.innerWidth + "px";
       heart.style.top = window.innerHeight + "px";
-
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 3000);
+      setTimeout(() => heart.remove(), 3000);
     }
   </script>
 
