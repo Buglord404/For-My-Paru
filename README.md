@@ -1,2 +1,2 @@
-# For-My-Paru
-Paru's Valentine's Day 
+# Permission seeker
+ Valentine's Day for paru
